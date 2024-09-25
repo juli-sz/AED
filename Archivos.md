@@ -16,14 +16,14 @@ reg1 = reg
 fin reg
 ```
 2. declaro el archivo segun que logica de ordenamiento tiene y si es necesario los campos por los cuales se ordena (clave)
-	- op1
-		```
-		archivo_secuencial: archivo de reg1 ordenado por campo1, campo2
-		```
-	- op2
-		```
-		archivo_indexado: archivo de reg1 indexado por campo1, campo2
-		```
+- op1
+	```
+	archivo_secuencial: archivo de reg1 ordenado por campo1, campo2
+	```
+- op2
+	```
+	archivo_indexado: archivo de reg1 indexado por campo1, campo2
+	```
 3. por ultimo, defino mis "ventanas", registros con los que voy a "recorrer" mi archivo
 `ventana_sec, ventana_index: reg1`
 
