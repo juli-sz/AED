@@ -23,7 +23,7 @@ nombre_arreglo: arreglo de [tamaño_en_x][tamaño_en_y][tamaño_en_z] de tipo_de
 ## Uso
 - para acceder al contenido de una posicion de un arreglo hacemos `nombre_arreglo[i][j]` siendo i y j los indices a los que queremos acceder
 - para guardar algun valor en una posicion particular de un arreglo hacemos `nombre_arreglo[i][j]:=valor`
-- para acumular dentro de una posicion particular de un arreglo hacemos `nombre_arreglo[i][j]:=nombre_arreglo[i][j]+valor`
+- para acumular dentro de una posicion particular de un arreglo hacemos ```nombre_arreglo[i][j]:=nombre_arreglo[i][j]+valor```
 - para recorrer un arreglo, como sabemos la cantidad de indices (ya que nosotros los definimos), utilizamos una estructura repetitiva, manejada por contador, un ciclo para. Hacemos
   ```
   para i:=1 hasta n1 hacer
