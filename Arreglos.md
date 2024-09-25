@@ -37,11 +37,13 @@ nombre_arreglo: arreglo de [tamaño_en_x][tamaño_en_y][tamaño_en_z] de tipo_de
   - empezando por
     |     x    | Column 1 | Column 2 |
     |----------|----------|----------|
-    | Row 1    |     1    |     2    |
-    | Row 2    |     1    |     3    |
+    | fila 1   |     1    |     2    |
+    | fila 2   |     1    |     3    |
   - al agregar los indices extras para los totales tenemos
-    |     x    | Column 1 | Column 2 | Column 3 |
+    |     x    | Column 1 | Column 2 | totxfila |
     |----------|----------|----------|----------|
-    | Row 1    |     1    |     2    |     3    |
-    | Row 2    |     1    |     3    |     4    |
-    | Row 3    |     2    |     5    |     7    |
+    | fila 1   |     1    |     2    |     3    |
+    | fila 2   |     1    |     3    |     4    |
+    | totxcol  |     2    |     5    |     7    |
+
+## 
