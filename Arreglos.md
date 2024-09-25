@@ -3,17 +3,17 @@
 ## Estructura
 ### Definicion de mi arreglo
 - vector o arreglo unidimensional (una dimension)
-´´´
+```
 nombre_arreglo: arreglo de [tamaño] de tipo_de_dato
-´´´
+```
 - matriz o arreglo bidimensional (dos dimensiones)
-´´´
+```
 nombre_arreglo: arreglo de [tamaño_en_x][tamaño_en_y] de tipo_de_dato
-´´´
+```
 - cubo o arreglo tridimensional (tres dimensiones)
-´´´
+```
 nombre_arreglo: arreglo de [tamaño_en_x][tamaño_en_y][tamaño_en_z] de tipo_de_dato
-´´´
+```
 
 ### Atención!
 ---
