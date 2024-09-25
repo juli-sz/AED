@@ -36,7 +36,7 @@ ABRIR E/S(ARCH)
 ```
 - para recorrer el archivo _secuencial_ vamos a hacer un
 ```LEER(ARCHIVO,VENTANA)```
-- para controlar la condicion de finalizacion usamos "no fin de archivo" `NFDA(nombre_archivo)`
+- para controlar la condicion de finalizacion usamos "no fin de archivo" `NFDA(nombre_archivo)` -->
 ```MIENTRAS NFDA(ARCH)```
 - para escribir en un archivo de salida o sobre escribir en el de entrada podemos usar "escribir" o "grabar" pasando por parametro el archivo donde quiero escribir y la variable(registro o ventana) que quiero escribir
 ```
