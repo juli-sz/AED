@@ -1,0 +1,90 @@
+Accion parcialFiguritasEj1 es
+  ambiente
+    intercambio = registro
+      cod_figurita
+      cod_amigo
+      fecha_solicitud
+    fin registro
+    album = registro
+      cod_figurita
+      cantidad
+      permiteDuplicado
+    fin registro
+    archInter: archivo de intercambio ordenado por cod_figurita, cod_amigo
+    archAlbum,Sal: archivo de album ordenado por cod_figurita
+    inter: intercambio
+    al,s: album
+
+    procedimiento leer_intercambios() es
+      leer(archInter,inter)
+      si FDA(archInter) entonces
+        inter.cod_figurita:=HV
+      fin si
+    fin procedimiento
+
+    procedimiento leer_album() es
+      leer_album(archAlbum,album)
+      si FDA(archAlbum) entonces
+        al.cod_figurita:=HV
+      fin si
+    fin procedimiento
+  
+    duplicadas: entero
+    res_cod: //resguardo apra el codigo de figuritas
+
+  Proceso
+    abrir e/(archAlbum)
+    abrir e/(archInter)
+    abrir /s(Sal)
+    duplicadas:=0
+    Mientras al.cod_figurita<>HV o inter.cod_figurita<>HV hacer
+      si al.cod_figurita=inter.cod_figurita entonces
+        si al.permiteDuplicado="SI" entonces
+          s.cantidad:=al.cantidad
+          res_cod:=inter.cod_figurita
+          mientras inter.cod_figurita=res_cod hacer
+            s.cantidad:=s.cantidad+1
+            duplicadas:=duplicadas+1
+            leer_intercambios()
+          fin mientras
+          s.cod_figurita:=al.cod_figurita
+          s.permiteDuplicado:=al.permiteDuplicado
+          grabar(Sal,s)
+        si no
+          mientras inter.cod_figurita=res_cod
+            leer_intercambios()
+          fin mientras
+          s:=al
+          grabar(Sal,s)
+        fin si
+      si no
+        si al.cod_figurita<inter.cod_figurita entonces
+          s:=al
+          grabar(Sal,s)
+          leer_album()
+        si no     //album mayor
+          si (diff_fecha(inter.fecha,7)) entonces 
+            s.cod_figurita:=inter.cod_figurita
+            s.cantidad:=1
+            s.permiteDuplicado:="No"
+            res_cod:=inter.cod_figurita
+            mientras inter.cod_figurita=resg entonces
+              s.cantidad:=s.cantidad+1
+              duplicadas:=duplicadas+1
+            fin mientras
+            grabar(sal,s)
+          si no
+            mientras inter.cod_figurita=resg entonces
+              leer_intercambios()
+            fin mientras
+          fin si
+        fin si
+      fin si
+    fin mientras
+
+    esc("la cantidad de figuritas duplicadas son: ",duplicadas)
+
+
+
+
+

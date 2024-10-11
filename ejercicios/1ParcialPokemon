@@ -1,0 +1,118 @@
+Accion parcialPokemon(arreglo_poke) es
+Ambiente
+Clave= reg
+  Cod_Reg
+  Cod_User
+fin reg
+Captura= reg
+  clave:Clave
+fin registro
+Usuario = reg
+  ...
+fin registro
+mov:archivo de Captura ordenado por clave, Cod_Poke
+mae:archivo de Usuario ordenado por clave
+salida: archivo de Usuario
+mo:Captura
+ma,s:Usuario
+cant_pok: arreglo de [1..151] de entero
+nom_pok: arreglo_poke//arreglo de [1..151] de N(15)
+
+procedimiento leerMae()
+  LEER(mae,ma)
+  SI FDA(mae) ENTONCES
+    ma.clave:=HV
+  FIN SI
+FIN procedimiento
+
+procedimiento leerMo()
+  LEER(mov,mo)
+  SI FDA(mov) ENTONCES
+    mo.clave:=HV
+  FIN SI
+FIN procedimiento
+
+
+Proceso
+//abrir 
+mientras (ma.clave<>HV o mo.clave<>HV) hacer
+  si ma.clave.Cod_Reg=mo.clave.Cod_Reg hacer
+    si ma.clave.Cod_User=mo.clave.Cod_User hacer
+      si mo.EstadoUser<>"Suspendido" entonces
+        s:=ma
+        mientras (ma.clave.Cod_User=mo.clave.Cod_User y ma.clave.Cod_Reg=mo.clave.Cod_Reg) hacer
+          si mo.EstadoPok="entrenandose" entonces
+            s.experiencia:=s.experiencia+mo.puntosExp*2
+          si no
+            si mo.EstadoPok:="descansando" entonces
+              cant_pok[mo.Cod_Poke]:=cant_pok[mo.Cod_Poke]+1
+            fin si
+            s.experiencia:=s.experiencia+mo.puntosExp
+          fin si
+          leerMo()
+        fin mientras
+      si no
+        leerMae()
+        //leer hasta saltear ese usuario
+      fin si
+    si no
+      si ma.clave.Cod_User<mo.clave.Cod_User entonces
+        s:=ma
+        grabar(salida,s)
+        leerMae()
+      si no
+        si mo.EstadoUser="activo" entonces
+          resg_user:=Cod_User
+          s.experiencia:=0
+          mientras mo.clave.Cod_User=resg_user hacer
+            si mo.EstadoPok="entrenandose" hacer
+              s.experiencia:=s.experiencia+mo.puntosExp*2
+            si no
+              si mo.EstadoPok:="descansando" entonces
+                cant_pok[mo.Cod_Poke]:=cant_pok[mo.Cod_Poke]+1
+              fin si
+              s.experiencia:=s.experiencia+mo.puntosExp
+            fin si
+            leerMov()
+          fin mientras
+          s.correo:=" "
+          s.Cod_Reg:=mo.Cod_Reg
+          S.Cod_User:=mo.Cod_User
+          Grabar(salida,s)
+        fin si
+  si no
+    si ma.clave.Cod_Reg<mo.clave.Cod_reg
+      s:=ma
+      grabar(salida,s)
+      leerMae()
+    si no
+      si mo.EstadoUser="activo" entonces
+      resg_user:=Cod_User
+      s.experiencia:=0
+      mientras mo.clave.Cod_User=resg_user hacer
+        si mo.EstadoPok="entrenandose" hacer
+          s.experiencia:=s.experiencia+mo.puntosExp*2
+        si no
+          si mo.EstadoPok:="descansando" entonces
+            cant_pok[mo.Cod_Poke]:=cant_pok[mo.Cod_Poke]+1
+          fin si
+          s.experiencia:=s.experiencia+mo.puntosExp
+        fin si
+        leerMov()
+      fin mientras
+      s.correo:=" "
+      s.Cod_Reg:=mo.Cod_Reg
+      S.Cod_User:=mo.Cod_User
+      Grabar(salida,s)
+  fin si
+fin mientras
+
+mayor:=0
+pos:=0
+para i:=1 hasta 151 hacer
+  si cant_pok[i]>mayor entonces
+    mayor:=cant_pok[i]
+    mayorPos:=i
+  fin si
+fin para
+ESC("el pókemon descansando que tiene la mayor cantidad de usuarios es", nom_pok[mayorPos],"con: ",mayor)

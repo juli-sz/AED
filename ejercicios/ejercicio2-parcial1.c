@@ -19,9 +19,19 @@ accion ej_parcial2 es
         reg_amigos: amigos
         pos_mayor,mayor:=entero
 
+        amigo= reg
+            cod
+            d
+            c
+            v
+        fin registro
+        arr_amigos: arreglo de [1..11] de amigo
+
     proceso
-        para i:=1 hasta 10 hacer
-            arr_album[i]:=0
+        para i:=1 hasta 11 hacer
+            para j:=1 hasta 4 hacer
+                arr_album[i]:=0
+            fin para
         fin para
         Abrir E/ (arch_album)
         Abrir E/ (arch_amigos)
@@ -59,17 +69,17 @@ accion ej_parcial2 es
             fin para
         fin para
         para i:=1 hasta 10 hacer
-            
             si arr_album[i][4] > mayor entonces
                 pos_mayor:=i
                 mayor:=arr_mayor[i][4]
             fin si
-
         fin para 
         reg_amigos.clave:=pos_mayor
         Leer(arch_amigos,reg_amigos)
         si existe entonces
             esc("el que mas figuritas coleccionó fue ", reg_amigos.nombre, " ", reg_amigos.apellido, "con ", mayor, "figuritas")  
+        si no
+            esc("error, no existe ese amigo")
         fin si
         para i:=1 hasta 10 hacer
             esc("para el usuario: ",i," el porcentaje de figuritas descubiertas fue de: ", arr_album[i][4]*100/arr_album[11][4])
@@ -80,6 +90,12 @@ accion ej_parcial2 es
     
             
 
+
+para i:= hasta 10 hacer
+    regsalida.amigo:=i
+    regsalida.cantidad:=arr_album[i][4].cantidad
+    Grabar(salida, regsalida)
+fin para
 
 
 
