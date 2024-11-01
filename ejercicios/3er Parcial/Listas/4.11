@@ -1,0 +1,25 @@
+En una empresa de servicios motorizados que NO posee una cantidad fija de integrantes, pero siempre es mayor que 1 (uno). Los datos de las personas está almacenados en un archivo (DNI, Nombre, Antigüedad) ordenado por DNI. Realizar un algoritmo que permita generar una lista de asignación (usando una estructura de lista doblemente encadenada), ordenada al principio por antigüedad, y un proceso que realice dicha asignación, en cada solicitud, por turno según orden en la lista. Una vez asignado dicha persona se va al final de la lista para esperar su nueva asignación. Al final del día informar cuantas asignaciones tuvo cada integrante.
+
+PERSONAL
+---
+| Nro_Personal N(5)| Nombre AN(50)| Asignaciones N(5) | Antigüedad N(2)
+
+//tomamos asi por falta de claridad en la consigna
+| DNI N(8)| Nombre AN(50)| Asignaciones N(5) | Antigüedad N(2)
+
+Accion 4.11 (prim: puntero a nodo) es
+
+ambiente
+    nodo = reg
+        DNI
+        Nombre
+        Asignaciones
+        prox
+    fin reg
+    reg_personal = reg
+        DNI N(8)
+        Nombre AN(50)
+        Antigüedad N(2)
+    fin registro
+    PERSONAL: archivo de reg_personal ordenado por DNI
+    pers
