@@ -1,0 +1,13 @@
+Determine recursivamente si un número dado es par o impar, usando sólo la operación resta.
+
+procedimiento par(n:entero) es
+	si n=2 o n=0 entonces
+		esc("es par")
+	si no
+		si n=1 entonces
+			esc("es impar")
+		si no
+			par(n-2)
+		fin si
+	fin si
+fin procedimiento

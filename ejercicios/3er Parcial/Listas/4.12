@@ -21,7 +21,7 @@ Accion 4.12 es
         eleccion:N(1)
     
     proceso 
-        mientras
+        mientras condicion hacer
             esc("ingrese 1 para registrar pedido, 2 para realizar envio o 3 para recibir el cobro")
             leer(eleccion)
             segun eleccion hacer
@@ -40,12 +40,12 @@ Accion 4.12 es
                         prim:=P
                         Q:=P
                     si no
-                        si *p.nombre<*prim.nombre entonces
+                        si *p.nombre<*prim.nombre entonces //tengo que poner p antes del primer elemento
                             *p.prox:=prim
                             prim:=p
                             Q:=prim
                         si no
-                            mientras ((*q.prox).nombre<*p.nombre o *q.prox=nil) hacer
+                            mientras ((*q.prox).nombre<*p.nombre y *q.prox<>nil) hacer
                                 q:= *q.prox
                             fin mientras
                             si *q.prox=nil entonces
@@ -83,8 +83,9 @@ Accion 4.12 es
                         si q=nil entonces
                             esc("no se encontro el cliente")
                         si no  //se encontro y lo tengo que borrar
-                            *ant.prox:=*q.prox
+                            *Q.prox:=*q.prox
                             disponer(q)
                         fin si
                 otro: error en la eleccion, ingrese de vuelta o ingrese 0 para salir
-        fin segun
+            fin segun
+        fin mientras

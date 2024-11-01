@@ -1,0 +1,46 @@
+Diseñar un algoritmo para acceder, eliminar o insertar el k-ésimo elemento de una lista (siendo k una posición dada). Si la lista está vacía o si el valor de k esta fuera del rango del índice de la lista, invocar al procedimiento de ERROR. En cualquier otro caso, efectuar el procedimiento solicitado.
+
+ACCION 4.1(PRIM: puntero a nodo) es
+AMBIENTE
+	NODO = REG
+		DATO
+		PROX
+	FIN REGISTRO
+	P, Q: PUNTERO A NODO
+	K, i, ELECCION: ENTERO
+	
+PROCESO
+	P:=PRIM
+	ESC("INGRESE EL ELEMENTO QUE QUIERE OPERAR")
+	LEER(K)
+	ESC("ingrese 1 si quiere acceder, 2 si quiere eliminar o 3 si quiere insertar")
+	leer(ELECCION)
+	i:=1
+	MIENTRAS (i<K Y p<>nill) HACER
+		ANT:=P
+		P:=P.PROX
+	FIN MIENTRAS
+	si p=nill entonces
+		esc("el valor para k esta fuera del rango")
+	si no
+		SI ELECCION=1 ENTONCES
+			ESC(^P.DATO)
+		SI NO
+			SI ELECCION=2 ENTONCES
+				^ANT.PROX:=^P.PROX
+				DISPONER(P)
+			SI NO
+				SI ELECCION=3 ENTONCES
+					ESC("INGRESE VALOR A CARGAR")
+					NUEVO(Q)
+					LEER(^Q.DATO)
+					^Q.PROX:=^P.PROX
+					^P.PROX:=Q
+				SI NO
+					ESC(ERROR DE ELECCION)
+				FIN Si
+			FIN SI
+		FIN SI
+	FIN
+
+FIN ACCION
