@@ -1,0 +1,842 @@
+Ejercicio 4.2¶
+Se dispone de una lista simplemente encadenada de números enteros, 
+diseñar un algoritmo que a partir de ella genere otra lista conteniendo 
+los nodos cuyos datos terminan en cero; dichos elementos, deberán ser 
+eliminados de la lista original. Se asume que la lista está cargada, y 
+que el algoritmo recibe como parámetro de entrada la dirección del 
+primer elemento.
+
+
+Accion 4.2 (prim: puntero a Nodo) es 
+	Ambiente 
+
+	Nodo_nuevo= registro 
+		dato: entero
+		prox: puntero a Nodo_nuevo
+	Finregistro
+
+	p, ant: puntero a Nodo
+	prim2, ant2, q: puntero a Nodo_nuevo
+
+	Proceso 
+	prim:= p 
+	prim2:= nil 
+	Mientras (p <> nil) hacer 
+		Si (*p.dato MOD 10= 0) entonces
+			Nuevo (q)
+			*q.dato:= *p.dato  
+			*q.prox:= nil 
+			// cargar lista nueva 
+			Si (prim2 = nil) entonces
+				prim2:= q 
+				ant2:= q 
+			Sino 
+				*ant2.prox:= q 
+				ant2:= q 
+			Finsi 
+			// para eliminar de la vieja 
+			Si (prim = p) entonces
+				prim:= *prim.prox
+			Sino 
+				*ant.prox:= *p.prox 
+			Finsi 
+			Borrar (p)
+		Sino 
+			ant:= p 
+			p:= *p.prox
+		Finsi 
+	FinMientras
+FinAccion
+
+--------------------------------------------------------------------------------
+
+Ejercicio 4.3¶
+Dada una lista simplemente encadenada de números diseñar un algoritmo que calcule en forma independiente: 
+La suma de los números impares, y la suma de los números pares. 
+
+Accion 4.3 (prim: puntero a Nodo) es 
+	Ambiente 
+
+	sum, sum_im: entero 
+	p, ant: puntero a Nodo
+
+	Proceso 
+	prim:= p 
+	sum:= 0 
+	sum_im:= 0 
+	Mientras (p <> nil) hacer
+		Si (*p.dato MOD 2= 0) entonces
+			sum:= sum + *p.dato 
+		Sino 
+			sum_im:= sum_im + *p.dato 
+		Finsi 
+		p:= *p.prox  
+	FinMientras
+FinAccion
+
+------------------------------------------------------------------------------
+
+
+Ejercicio 4.5¶
+Dada una lista simplemente encadenada que contiene datos de todas las 
+provincias de la República Argentina: nombre, capital, cantidad total 
+de habitantes y cantidad de analfabetos, y está ordenada en forma 
+decreciente por número de habitantes analfabetos, generar otras tres 
+listas que contengan el nombre, la capital y el porcentaje de 
+analfabetos de las Provincias que respondan a las siguientes 
+restricciones.
+
+L1: <= 10 % analfabetos
+L2: 16 a 25 % analfabetos
+L3: => 26 % analfabetos
+
+Accion 4.5 (prim: puntero a Nodo) es 
+
+	Ambiente 
+
+	Nodo= registro
+		nombre: AN (20)
+		capital: AN (20)
+		tot_hab: N (10)
+		tot_an: N (10)
+		prox: puntero a Nodo
+	Finregistro
+
+	Nodo_new= registro
+		nombre: AN (20)
+		capital: AN (20)
+		porc: N (2,2)
+	Finregistro
+
+	p: puntero a Nodo
+	q, prim1, prim2, prim3, ant1, ant2, ant3: puntero a Nodo_new
+
+	Procedimiento Cargar_lista_1 () es 
+		Si (prim1 = nil) entonces
+			prim1:= q 
+			ant1:= q 
+		Sino 
+			*ant1.prox:= q 
+			ant1:= q 
+		Finsi 
+	FinProcedimiento
+
+	Procedimiento Cargar_lista_2 () es 
+		Si (prim2 = nil) entonces
+			prim2:= q 
+			ant2:= q 
+		Sino 
+			*ant2.prox:= q 
+			ant2:= q 
+		Finsi 
+	FinProcedimiento
+
+	Procedimiento Cargar_lista_3 () es 
+		Si (prim3 = nil) entonces
+			prim3:= q 
+			ant3:= q 
+		Sino 
+			*ant3.prox:= q 
+			ant3:= q 
+		Finsi 
+	FinProcedimiento
+
+	Proceso 
+
+	prim:= p 
+	prim1:= nil 
+	prim2:= nil 
+	prim3:= nil 
+
+	Mientras (p <> nil) hacer 
+		Nuevo (q)
+		*q.nombre:= *p.nombre 
+		*q.capital:= *p.capital
+		*q.porc:= (*p.tot_an / *p.tot_hab)* 100
+		*q.prox:= nil 
+		Segun (*q.porc) hacer 
+			<= 10: Cargar_lista_1 ()
+			< 25: Cargar_lista_2 ()
+			>= 26: Cargar_lista_3 ()
+		Finsegun
+		p:= *p.prox 
+	FinMientras
+FinAccion
+
+
+--------------------------------------------------------------------
+
+Ejercicio 4.7¶
+Genere un algoritmo que recorra una secuencia texto y genere una 
+lista simplemente encadenada con la frecuencia de 
+utilización de cada letra. La lista debe mantenerse ordenada 
+alfabéticamente y al final informar cual fue la frecuencia de 
+cada letra y cuáles fueron la de mayor y menor frecuencia.
+
+Accion 4.7 () es 
+	Ambiente 
+
+	Nodo= registro 
+		let: AN (1)
+		frec: N (2)
+		prox: puntero a Nodo
+	Finregistro
+
+	p, prim, ant, q: puntero a Nodo
+
+	sec: secuencia de caracteres
+	v: caracter 
+
+	Proceso 
+	Arr (sec); Avz (sec, v)
+	prim:= nil  
+
+	Mientras NFDS (sec) hacer 
+		p:= prim 
+		Nuevo (q)
+		*q.let:= v 
+		*q.frec:= 1 
+		*q.prox:= nil 
+		Si (prim = nil) ent
+			prim:= q 
+			ant:= q 
+		Sino 
+			Si (*p.let < *q.let) ent 
+				*ant.prox:= q 
+				ant:= q 
+			Sino 
+				Si (*p.let > *q.let) ent
+					*q.prox:= p 
+					*ant.prox:= q 
+				Sino 
+					Si (*p.let = *q.let) ent
+						*p.frec:= *p.frec + 1 
+					Finsi 
+				Finsi 
+			Finsi 
+		Finsi 
+	FinMientras
+
+	p:= prim 
+	min:= HV
+	max:= LV 
+	Mientras (p <> nil) hacer 
+		Si (*p.frec > max) entonces
+			max:= *p.frec
+			let_max:= *p.let 
+		Finsi 
+		Si (*p.frec < min) entonces
+			min:= *p.frec
+			let_min:= *p.let  
+		Finsi 
+		p:= *p.prox
+	FinMientras
+
+	Escribir ('la letra con mayor frecuencia es:', let_max, 'con una frecuencia de:', max)
+	Escribir ('la letra con menor frecuencia es:', let_min, 'con una frecuencia de:', min)
+FinAccion
+
+
+--------------------------------------------------------------------------------
+
+Ejercicio 4.9¶
+Dada una lista circular de 8 elementos que contienen, cada uno, un valor numérico entero para encriptación, 
+encriptar un texto ingresado por teclado (arreglo de caracteres de 255 elementos como máximo). 
+El texto encriptado debe almacenarse en una lista de salida simplemente encadenada y, por último mostrar por pantalla.
+
+ENCRIPTAR
+
+Multiplicador N(5) Prox Puntero
+La encriptación se realiza según las siguientes pautas:
+
+Dada la posición del carácter dentro del texto, buscar en la lista circular de encriptación el multiplicador correspondiente, 
+de acuerdo a su posición lógica en la lista. Por ejemplo: como solo hay 8 multiplicadores, si se ingresa un arreglo de 10 caracteres, 
+para encriptar los ultimos dos se utilizarían los multiplicadores 1 y 2.
+Se usa la función ASCII(Carácter) para convertir cada carácter del arreglo en un entero.
+Luego se lo multiplican los valores obtenidos en los 2 pasos anteriores.
+Por último se descompone el resultado obtenido en 3 en cada uno de sus dígitos, se los suma y se guarda en la lista de salida. 
+Ej: si en el paso 3 me dio 123, 1+2+3=6.
+
+
+Accion 4.9 (prim: puntero a Nodo) es 
+
+	Ambiente 
+
+	Arr: arreglo [1..255] de caracteres
+
+	Nodo_s= registro
+		dato: entero 
+		prox: puntero a Nodo_s 
+	Finregistro
+
+	Nodo_c= registro 
+		multi: N (5)
+		prox: puntero a Nodo_c
+	Finregistro
+
+	p: puntero a Nodo_c
+	t, q, ant: puntero a Nodo_s 
+	car_a_ent: entero
+	encrip: entero 
+	descomp: entero 
+	i: entero 
+
+	Proceso 
+
+	Escribir ('ingrese un texto de no mas de 255 letras')
+	Para i:= 1 a 255 hacer 
+		Leer (Arr[i])
+		i:= i + 1 
+	Finpara 
+
+	p:= prim 
+
+	Mientras (Arr[i] <> '.') hacer 
+		car_a_ent:= ASCII (Arr[i])
+		Mientras (*p.prox <> prim) y (*p.mult <> car_a_ent) hacer 
+			p:= *p.prox 
+		Finmientras 
+		// busco el multiplicador correspondiente 
+		Si (*p.mult <> car_a_ent) ent 
+			encrip:= (car_a_ent MOD 8) * (*p.mult)
+		Sino 
+			encrip:= car_a_ent * (*p.mult)
+		Finsi 
+
+		// descomponer el nro 
+		Mientras (encrip <> 0) hacer 
+			descomp:= descomp + (encrip MOD 10)
+			encrip:= encrip DIV 10
+		FinMientras
+
+		t:= prim2 
+		ant:= nil 
+		Nuevo (q)
+		*q.dato:= descomp 
+		*q.prox:= nil
+		Si (prim2 = nil) ent
+			prim2:= q 
+			ant:= q   
+		Sino 
+			*ant.prox:= q 
+			*q.prox:= t 
+		Finsi 
+
+		//avanzo arreglo 
+		i:= i + 1 
+	Finmientras 
+	// mostrar lista 
+
+	t:= prim2 
+	Mientras (t <> nil) hacer 
+		Escribir (*t.dato)
+		t:= *t.prox 
+	FinMientras
+FinAccion
+
+----------------------------------------------------------------------------------
+
+Ejercicio 4.11¶
+En una empresa de servicios motorizados que NO posee una cantidad fija de integrantes, pero siempre es mayor que 1 (uno). 
+Los datos de las personas está almacenados en un archivo (DNI, Nombre, Antigüedad) ordenado por DNI. Realizar un algoritmo 
+que permita generar una lista de asignación (usando una estructura de lista doblemente encadenada), ordenada al principio por 
+antigüedad, y un proceso que realice dicha asignación, en cada solicitud, por turno según orden en la lista. Una vez asignado dicha 
+persona se va al final de la lista para esperar su nueva asignación. Al final del día informar cuantas asignaciones tuvo cada integrante.
+
+PERSONAL
+Nro_PersonalN(5)_NombreAN(50)_AsignacionesN(5)_AntigüedadN(2)
+
+Accion 4.11 () es 
+
+	Ambiente 
+
+	Personal= registro 
+		dni: N (5)
+		nom: AN (50)
+		antig: N (2)
+	Finregistro 
+
+	Arch: Archivo de Personal ordenado por dni
+	Reg: Personal 
+
+	Nodo= registro
+		dato= registro
+			dni: N (5)
+			nom: AN (50)
+			antig: N (2)
+			asig: N (5)
+		Finregistro
+		ant, prox: puntero  a Nodo 
+	Finregistro
+
+	p, q, ult, prim: puntero a Nodo
+	op: AN 
+
+	Procedimiento Cargar_lista () es 
+		// vacia 
+		Si (prim = nil) entonces
+			*p.prox:= nil 
+			*p.ant:= nil 
+			prim:= q 
+			ult:= q 
+		Sino 
+			// primero
+			Si (p = prim) ent 
+				*q.prox:= p 
+				*q.ant:= nil 
+				*p.ant:= q 
+				prim:= q 
+			Sino 
+			// ultimo 
+				Si (p = nil) entonces
+					*q.prox:= nil 
+					*q.ant:= ult  
+					*ult.prox:= q
+					ult:= q  
+				Sino 
+				// medio ordena de menor a mayor por antig 
+					Si (*q.dato.antig < *p.dato.antig) ent 
+						*q.prox:= p 
+						*p.ant:= q  
+						*q.ant:= *p.ant 
+						*(*p.ant).prox:= q 
+					Finsi 
+				Finsi 
+			Finsi 
+		Finsi 
+	FinProcedimiento
+
+	Proceso 
+
+	Abrir e/ (Arch); Leer (Arch, Reg)
+	prim:= nil
+	ult:= nil 
+	p:= prim
+	Mientras NFDA (Arch) hacer 
+		Nuevo (q)
+		*q.dato.dni:= Reg.dni 
+		*q.dato.nom:= Reg.nom 
+		*q.dato.antig:= Reg.antig 
+		*q.dato.asig:= 0
+		Cargar_lista ()
+		Leer (Arch, Reg)
+	FinMientras
+
+	Escribir ('asignar empleado? S/N'); Leer (op)
+	Mientras (op = 'S') hacer 
+		p:= prim 
+		Escribir ('el empleado es:', *p.dato.nom)
+		*p.dato.asig:= *p.dato.asig + 1 
+
+		// va al final de la lista 
+		prim:= *p.prox 
+		*prim.ant:= nil 
+		*p.ant:= ult 
+		*p.prox:= nil 
+		*ult.prox:= p 
+		ult:= *ult.prox 
+
+		Escribir ('asignar otro empleado? S/N'); Leer (op)
+	FinMientras
+	Cerrar (Arch)
+	p:= prim 
+	Mientras (p <> nil)
+		Escribir ('nombre del empleado:', *p.dato.nom)
+		Escribir ('cantidad de asignaciones:', *p.dato.asig)
+		p:= *p.prox
+	FinMientras
+FinAccion
+
+
+----------------------------------------------------------------------------------
+Ejercicio 4.12¶
+En el nuevo DELIVERY VAMOS-RAPIDO se está diseñando una solución informática para la atención de clientes. Se ha pensado en una 
+LISTA por su dinamismo en cuanto a la cantidad de elementos. Diseñe un algoritmo que realice las siguientes funciones:
+
+Registrar su pedido en una lista Doble (se agrega en Estado P (Pendiente), y se mantiene ordenado por Nombre del Cliente).
+Realizar el envío (cambia estado del pedido de P (pendiente) a E (Enviado)).
+Eliminar del listado de atención una vez recibido el cobro (al atender el cobro del cadete que hizo el trabajo).
+Datos a almacenar por pedido: Nombre, Dirección, Teléfono y Total.
+La información almacenada debe mantenerse ordenada por Nombre del cliente.
+
+
+Accion 4.12 es ()
+	Ambiente 
+
+	Nodo= registro 
+		nom: AN (20)
+		direc: AN (20)
+		tel: N (10)
+		tot: N (5)
+		est: ('P', 'E')
+		prox, ant: puntero a Nodo 
+	Finregistro 
+
+	p, q, ult, prim: puntero a Nodo 
+
+	Procedimiento alta_pedido () es 
+		Escribir ('ingrese su nombre'); Leer (nom_usu)
+		Escribir ('ingrese su direccion'); Leer (direc_usu)
+		Escribir ('ingrese su telefono'); Leer (tel_usu)
+		Escribir ('ingrese total'); Leer (tot_usu)
+		Nuevo (q)
+		*q.nom:= nom_usu 
+		*q.direc:= direc_usu
+		*q.tel:= tel_usu
+		*q.tot:= tot_usu 
+		*q.est:= 'P'
+		// lista vacia 
+		Si (prim = nil) ent 
+			prim:= q 
+			ult:= q 
+			*p.prox:= nil 
+			*p.ant:= nil 
+		Sino 
+			p:= prim 
+			Mientras (p <> nil) y (*q.nom > *p.nom) hacer 
+				p:= *p.prox
+			FinMientras
+			// delante del primero 
+			Si (p = prim) ent  
+				*q.prox:= p  
+				*p.ant:= q  
+				*q.ant:= nil  
+				prim:= q  
+			Sino // ultimo
+				Si (p = nil) ent 
+					*ult.prox:= q  
+					*q.ant:= ult 
+					*q.prox:= nil  
+					ult:= q   
+				Sino // medio 
+					*(*p.ant).prox:= q 
+					*q.ant:= *p.ant 
+					*q.prox:= p 
+					*p.ant:= q 
+				Finsi 
+			Finsi 
+		Finsi 
+	FinProcedimiento
+
+	Procedimiento envio_pedido () es 
+		Escribir ('ingrese nombre del cliente'); Leer (nomcli)
+		Si (prim = nil) ent 
+			Escribir ('lista vacia')
+		Sino 
+			p:= prim 
+			Mientras (p <> nil) y (*p.nom <> nomcli) hacer 
+				p:= *p.prox 
+			FinMientras
+			Si (*p.nom <> nomcli) entonces
+				Escribir ('error, no se encontro el cliente')
+			Sino 
+				*p.est:= 'E'
+			Finsi 
+		Finsi 
+	FinProcedimiento
+
+	Procedimiento eliminar_pedido () es 
+		Escribir ('ingrese el nombre del cliente'); Leer (nomcli)
+		Si (prim = nil) ent 
+			Escribir ('error lista vacia')
+		Sino 	
+			p:= prim 
+			Mientras (p <> nil) y (*p.nom <> nomcli) hacer 
+				p:= *p.prox 
+			FinMientras
+			Si (*p.nom <> nomcli) entonces
+				Escribir ('error, no se encontro el cliente')
+			Sino 
+				Si (*p.est = 'E') ent 
+					Si (prim = ult) ent 
+						prim:= nil 
+						*prim.ant:= nil 
+					Sino 
+						Si (p = ult) ent 
+							*ult.ant:= nil  
+							ult:= *p.ant  
+						Sino 
+							*p.ant:= *p.prox // *(*p.prox).ant:= *p.ant
+							*p.prox:= *p.ant // *(*p.ant).prox:= *p.prox
+						Finsi 
+					Finsi 
+					Borrar (p)
+				Sino 
+					Escribir ('error no se puede borar porque sigue en pendiente')
+				Finsi 
+			Finsi 
+		Finsi 
+	FinProcedimiento
+
+	Proceso 
+	prim:= nil 
+	ult:= nil
+
+	Escribir ('¿que operacion desea realizar?')
+	Escribir ('1-cargar nuevo pedido')
+	Escribir ('2-dar de baja')
+	Escribir ('3-realizar envio')
+	Leer (op)
+	Segun op hacer 
+		'1': alta_pedido ()
+		'2': eliminar_pedido ()
+		'3': envio_pedido () 
+	Finsegun 
+Finaccion 
+---------------------------------------------------------
+
+Accion parcial_super (prim_c: puntero a Nodo_c) es 
+	Ambiente 
+
+	Arch_sec: Archivo de Compras ordenado por Fecha_compras
+	Reg_sec: Compras 
+
+	Compras= registro 
+		Fecha_compras: Fecha  
+		Dni: N (8)
+		Cant_art: N (5)
+		Im_tot: N (5)
+	Finregistro
+
+	Arch_index: Archivo de Socios indexado por Dni 
+	Reg_ind: Socios
+
+	Socios= registro 
+		Dni: N (8)
+		Apeynomb: AN (15) // *
+		Fecha_ad: Fecha 
+		Cat: N (1)
+	Finregistro
+
+	Nodo= Registro 
+		Apeynomb: AN (15)
+		Chances_tot: N (2)
+		prox, ant: puntero a Nodo 
+	Finregistro
+
+	p, prim, q, ult: puntero a Nodo 
+
+	Procedimiento tiro_random () es 
+		Si (Reg_ind.Cat = 'Black') entonces
+			Para i:= 1 a Tirar () hacer 
+				prim_c:= *prim_c.prox 
+			Finpara 
+			*p.Chances_tot:= *p.Chances_tot + *prim_c.dato 
+		Finsi 
+	FinProcedimiento
+
+	Procedimiento hola () es 
+		*q.Apeynomb:= Reg_ind.Apeynomb
+		Si (Reg_sec.Im_tot >= 100) entonces
+			*q.Chances_tot:= 5 + (Reg_sec.Im_tot / 100)
+		Sino 
+			*q.Chances_tot:= 5
+		Finsi  
+	FinProcedimiento
+
+
+	Proceso 
+	Abrir e/ (Arch_sec); Leer (Arch_sec, Reg_sec)
+	Abrir e/ (Arch_index)
+
+	Mientras NFDA (Arch_sec) hacer 
+		Reg_ind.Dni:= Reg_sec.Dni
+		Leer (Arch_index, Reg_ind) 
+		Si EXISTE entonces
+			Si (prim = nil) entonces
+				Nuevo (q)
+				prim:= q 
+				ult:= q 
+				*q.ant:= nil 
+				*q.prox:= nil 
+				hola ()
+				tiro_random ()
+			Sino 
+				p:= prim 
+				Nuevo (q)
+				hola ()
+				Mientras (p <> nil) y (*q.Apeynomb > *p.Apeynomb)hacer 
+					ant:= p 
+					p:= *p.prox 
+				FinMientras
+				// primero 
+				Si (p = prim) entonces 
+					*q.prox:= p 
+					*p.ant:= q 
+					*q.ant:= nil 
+					prim:= q 
+					tiro_random ()
+				Sino // ultimo 
+					Si (p = nil)
+						*ult.prox:= q 
+						*q.ant:= ult 
+						*q.prox:= nil 
+						ult:= q 
+					Sino // medio 
+						*p.ant:= q 
+						*q.prox:= p
+						*ant.prox:= q  
+						*q.ant:= ant  
+					Finsi 
+				Finsi 
+			Finsi 
+		Sino 
+			Escribir ('ERROR')
+		Finsi 
+		Leer (Arch_sec, Reg_sec)
+	FinMientras
+	Cerrar (Arch_sec)
+	Cerrar (Arch_index)
+FinAccion
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Ejercicio 4.13¶
+Dada una lista doblemente encadenada de enteros, ordenada en forma creciente, escriba un algoritmo que elimine
+las entradas repetidas. El algoritmo debe verificar al inicio que la lista que se pasa como argumento está ordenada; 
+en caso afirmativo realizar la depuración y emitir un mensaje de 'ÉXITO'; en caso contrario, emitir un mensaje de 'ERROR'.
+
+Accion 4.13 (prim: puntero a Nodo) es 
+	Ambiente 
+
+	Nodo= registro
+		dato: entero
+		ant, prox: puntero a Nodo
+	Finregistro
+
+	q, a: puntero a Nodo
+
+	Proceso
+	prim:= q 
+	Mientras (q <> nil) y (*a.dato < *q.dato) hacer 
+		a:= q 
+		q:= *q.prox
+	FinMientras
+	Si (q = nil) entonces
+		// controlalos repetidos
+		Mientras (*a.dato = *q.dato) hacer 
+			*a.prox:= *q.prox 
+			*(*q.prox).ant:= a 
+			Borrar (q)
+		Finmientras 
+		a:= q 
+		q:= *q.prox
+	Sino 
+		Escribir ('Error')
+	Finsi 
+FinAccion
+
+
+--------------------------------------------------------------------------------------------------------------
+Ejercicio 4.14¶
+Se desea ingresar una serie de números, e imprimirlos en el orden contrario al de ingreso. Diseñar un 
+algoritmo que satisfaga tal requerimiento, utilizando la estructura de datos más apropiada.
+
+Accion 4.14 () es 
+	Ambiente
+
+	Nodo= Registro 
+		dato: entero 
+		prox: puntero a nodo 
+	Finregistro
+
+	prim, p, q: puntero a Nodo
+
+	num: entero 
+	rta: AN (1)
+
+	Proceso 
+	prim:= nil 
+	Escribir ('¿Desea cargar los numeros? S/N')
+	Leer (rta)
+	Mientras (rta = 'S') hacer 
+		Escribir ('Ingrese el numero')
+		Leer (num)
+		Nuevo (q)
+		// insercion carga apilada 
+		Si (prim = nil) entonces
+			prim:= p 
+		Sino 
+			*q.prox:= prim 
+			prim:= q 
+		Finsi 
+		Escribir ('¿Desea seguir cargando?')
+		Leer (rta)
+	FinMientras
+	p:= prim 
+	Mientras (p <> nil) hacer 
+		Escribir (*p.dato)
+		p:= *p.prox
+	FinMientras
+FinAccion
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+				
+				
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+	
+
+	
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+
+
+
+
+
+
+
+
+

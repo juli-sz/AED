@@ -4,10 +4,11 @@ ACCION 4.1(PRIM: puntero a nodo) es
 AMBIENTE
 	NODO = REG
 		DATO
-		PROX
+		P,A
 	FIN REGISTRO
 	P, Q: PUNTERO A NODO
 	K, i, ELECCION: ENTERO
+	
 	
 PROCESO
 	P:=PRIM
@@ -15,13 +16,13 @@ PROCESO
 	LEER(K)
 	ESC("ingrese 1 si quiere acceder, 2 si quiere eliminar o 3 si quiere insertar")
 	leer(ELECCION)
+
 	i:=1
 	MIENTRAS (i<K Y p<>nill) HACER
-		ANT:=P
-		P:=P.PROX
+		ANT:=P ; 		P:=*P.PROX
 	FIN MIENTRAS
 	si p=nill entonces
-		esc("el valor para k esta fuera del rango")
+		esc("el valor para k esta fuera del rango") //ERROR
 	si no
 		SI ELECCION=1 ENTONCES
 			ESC(^P.DATO)
@@ -37,7 +38,7 @@ PROCESO
 					^Q.PROX:=^P.PROX
 					^P.PROX:=Q
 				SI NO
-					ESC(ERROR DE ELECCION)
+					ESC("ERROR DE ELECCION")
 				FIN Si
 			FIN SI
 		FIN SI

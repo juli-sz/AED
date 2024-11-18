@@ -1,0 +1,49 @@
+Se desea ingresar una serie de números, e imprimirlos en el orden contrario al de ingreso. Diseñar un algoritmo que satisfaga tal requerimiento, utilizando la estructura de datos más apropiada.
+
+ACCION 4.14 ES
+
+AMBIENTE
+  NODO =  REG
+    DATO: ENTERO
+    PROX:= PUNTERO A NODO
+  FIN REG
+  Q,P,PRIM
+  COND=N(1)
+
+PROCESO
+COND:=1 
+MIENTRAS COND=1 HACER
+  ESC(INGRESE NUMERO A CARGAR)
+  NUEVO(P)
+  LEER(*P.DATO)
+
+  //INSERCIÓN
+  SI PRIM=NILL ENTONCES
+    PRIM:=P
+  SI NO
+    P.PROX:=PRIM
+    PRIM:=P
+  FIN SI
+  ESC("QUIERE SEGUIR CARGANDO?. Ingrese 1 para si y cualquier otra tecla para no")
+  LEER(COND)
+FIN MIENTRAS
+P:=PRIM
+MIENTRAS P<>NILL HACER
+  ESC(*P.DATO)
+  P:=*P.PROX
+FIN MIENTRAS
+
+
+    
+
+
+
+
+
+
+
+
+MIENTRAS (*Q.PROX<>NILL) HACER
+
+
+FIN ACCION
