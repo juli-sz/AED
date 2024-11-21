@@ -1,0 +1,46 @@
+accion Perfectos(prim: puntero a nodo) es
+ambiente
+	nodo= reg
+		ant,prox
+		dato
+	fin nodo
+	p:puntero a nodo
+	funcion perfecto(n,d: enteros):num
+		si n>d entonces
+			si (n mod d = 0) entonces
+				perfecto:=d + perfecto(n, d+1)
+			si no
+				perfecto:=perfecto(n, d+1)
+			fin si
+		si no
+			perfecto:=0
+		fin si
+	fin funcion
+	
+proceso
+	p:=prim
+	mientras p<>nil hacer
+		si perfecto(*p.dato,1)=*p.dato entonces
+			si p=prim
+				prim:=*p.prox
+				ANT:=prim
+			si no
+				si *p.prox:=nil
+				*(*p.ant).prox:=nil
+				si no
+					*(*p.prox).ant:=*p.ant
+					*(*p.ant).prox:=p.prox
+					ANT:=p.prox
+				fin si
+			fin si
+			disponer(p)
+			p:=ANT
+		si no
+			ANT:=p
+			p:=*p.prox
+		fin si
+
+		
+
+
+
