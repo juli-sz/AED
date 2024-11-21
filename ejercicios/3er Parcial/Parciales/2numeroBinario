@@ -1,0 +1,27 @@
+accion RecursividadPatron(prim:puntero a nodo) es
+ambiente
+	funcion Patron(d:entero):logico
+		si d = 10 entonces
+			Patron:=falso
+		si no
+			si (d mod 100 = 10) entonces
+				Patron:=Patron(d div 100)
+			si no
+				Patron:=verdadero
+			fin si
+		fin si
+	fin funcion
+	//definir lista circular
+	//definir lista simple
+
+proceso
+	
+	
+	si Patron(*p.valor) entonces
+	//carga en lista de salida
+	//borrar de la lista de entrada
+	fin si
+	ant:=p
+	p:=p.prox
+
+fin accion 
