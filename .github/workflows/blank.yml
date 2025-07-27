@@ -23,15 +23,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          # Eliminamos la configuración de cache
+          cache: 'npm'
 
-      - name: Install Quartz CLI
+      - name: Install Quartz
         run: |
-          npm install -g --no-package-lock https://github.com/jackyzha0/quartz.git
-          quartz --version
+          npm install https://github.com/jackyzha0/quartz.git
+          npm install -g quartz-cli
 
       - name: Build Quartz site
-        run: quartz build
+        run: npx quartz build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
