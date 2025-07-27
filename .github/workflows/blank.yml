@@ -23,7 +23,7 @@ jobs:
           node-version: 20
 
       - name: Install Quartz
-        run: npm install -g @jackyzha0/quartz-cli
+        run: npm install -g https://github.com/jackyzha0/quartz.git
 
       - name: Build site
         run: quartz build
