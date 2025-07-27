@@ -6,6 +6,7 @@ on:
     paths:
       - 'content/**'  # Solo se activa cuando cambian las notas
       - 'quartz/**'    # O cuando cambia la configuración
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
