@@ -17,21 +17,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache: 'npm'  # Opcional: puedes eliminar esta línea si no usas package-lock.json
+          # Eliminamos la configuración de cache
 
-      - name: Install Quartz globally
+      - name: Install Quartz CLI
         run: |
-          # Instalar sin verificar el lock file
-          npm install --global --no-package-lock https://github.com/jackyzha0/quartz.git
+          npm install -g --no-package-lock https://github.com/jackyzha0/quartz.git
           quartz --version
 
       - name: Build Quartz site
@@ -42,4 +38,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          keep_files: true
