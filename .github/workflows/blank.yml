@@ -13,22 +13,47 @@ on:
         required: false
         default: 'Actualización manual'
 
+
+
 jobs:
+  build:
+    # sobre que sistema operativo se ejecuta el flujo de trabajo
+    runs-on: ubuntu-latest
+    # define una matriz de versiones de node.js para ejecutar el flujo de trabajo
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    # define los pasos que se ejecutarán en el flujo de trabajo    
+    steps:
+      # clona el repositorio
+    - uses: actions/checkout@v4
+      # configura el token de GitHub para permitir el acceso a los repositorios privados 
+    - name: Use Node.js ${{ matrix.node-version }}
+      # configura la versión de node.js y habilita el cache de npm
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js 22.x
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
       - name: Install Quartz
         run: |
           npm install https://github.com/jackyzha0/quartz.git
-          npm install -g quartz-cli
 
       - name: Build Quartz site
         run: npx quartz build
