@@ -26,11 +26,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-          cache: 'npm'
+          cache: 'npm'  # Opcional: puedes eliminar esta línea si no usas package-lock.json
 
-      - name: Install Quartz from GitHub
+      - name: Install Quartz globally
         run: |
-          npm install -g https://github.com/jackyzha0/quartz.git
+          # Instalar sin verificar el lock file
+          npm install --global --no-package-lock https://github.com/jackyzha0/quartz.git
           quartz --version
 
       - name: Build Quartz site
