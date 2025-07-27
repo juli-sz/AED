@@ -4,28 +4,36 @@ on:
   push:
     branches: [main]
     paths:
-      - 'content/**'  # Solo se activa cuando cambian las notas
-      - 'quartz/**'    # O cuando cambia la configuración
+      - 'content/**'
+      - 'quartz/**'
   workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Razón del despliegue manual'
+        required: false
+        default: 'Actualización manual'
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Necesario para el historial completo
+          fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.x'
+          cache: 'npm'
 
-      - name: Install Quartz
-        run: npm install -g https://github.com/jackyzha0/quartz.git
+      - name: Install Quartz from GitHub
+        run: |
+          npm install -g https://github.com/jackyzha0/quartz.git
+          quartz --version
 
-      - name: Build site
+      - name: Build Quartz site
         run: quartz build
 
       - name: Deploy to GitHub Pages
@@ -33,4 +41,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          
+          keep_files: true
